@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { Badge } from "@/components/ui/badge"
+import { CreateAgentModal } from "@/components/modals/CreateAgentModal"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -12,6 +13,7 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [createAgentOpen, setCreateAgentOpen] = useState(false)
 
   return (
     <div className="flex h-screen bg-background">
@@ -134,7 +136,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 placeholder="Search agents, tasks..." 
                 className="w-64"
               />
-              <Button size="sm">
+              <Button size="sm" onClick={() => setCreateAgentOpen(true)}>
                 New Agent
               </Button>
             </div>
@@ -146,6 +148,16 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </main>
       </div>
+
+      {/* Create Agent Modal */}
+      <CreateAgentModal
+        open={createAgentOpen}
+        onOpenChange={setCreateAgentOpen}
+        onAgentCreated={() => {
+          // Refresh the page or emit an event
+          window.location.reload()
+        }}
+      />
     </div>
   )
 }
